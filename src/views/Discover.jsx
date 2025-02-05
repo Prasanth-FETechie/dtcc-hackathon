@@ -1,11 +1,26 @@
-import { Box, Typography, Paper, Button, Checkbox, FormControlLabel } from "@mui/material";
+import { Box, Typography, Paper, Button, Checkbox, FormControlLabel, Fab } from "@mui/material";
+import ExtractIcon from '@mui/icons-material/FileCopy'
 import Chatbot from "../components/Chatbot";
 import DocumentCard from "../layouts/cards";
 import MarketTable from "../components/MarketTable";
 import { useState, useEffect } from "react";
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { keyframes } from "@mui/material";
+
+const dropAnimation = keyframes`
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
 
 function Discover() {
+    const navigate = useNavigate();
     const [existingData, setExistingData] = useState([]);
     const [intResponseData, setIntResponseData] = useState([]);
     const [selectedQualifiers, setSelectedQualifiers] = useState([]);
@@ -31,21 +46,25 @@ function Discover() {
 
         fetchData();
     }, []);
+    useEffect(() => {
+        console.log("Current Selected Docs:", selectedDocs);
+    }, [selectedDocs]);
+    const handleNavigate = () => {
+        navigate('/extract', { state: { docs: selectedDocs } });
+      };
     const handleSelect = (doc) => {
+        console.log(doc)
         // setSelectedDocs((prevState) =>
         //     prevState.includes(doc) ? prevState.filter(item => item !== doc) : [...prevState, doc]
         // );
         setSelectedDocs(prevState => {
             // Check if the document is already selected, and toggle it
             const updatedState = prevState.includes(doc)
-              ? prevState.filter(item => item !== doc)
-              : [...prevState, doc];
-              
+                ? prevState.filter(item => item.title !== doc.title)
+                : [...prevState, doc];
+
             return updatedState;
-          });
-          Axios.post("htttpppdnkdk", selectedDocs).then(resp => {
-            return "lawda";
-          })
+        });
         console.log(selectedDocs)
     };
     const fetchIntentData = async (input) => {
@@ -100,10 +119,10 @@ function Discover() {
             <Box sx={{ flex: 8, display: "flex", flexDirection: "column" }}>
                 <Box sx={{ flex: 1, display: "flex", gap: 2 }}>
                     {/* Left Section */}
-                    <MarketTable data={existingData} title="" />
+                    <MarketTable data={existingData} title="" id="discover"/>
                     {/* Right Section */}
-                    <Paper sx={{ width: '70vw', overflowY: 'auto', height: '75vh'}}>
-                        <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
+                    <Paper sx={{ width: '70vw', overflowY: 'auto', height: '75vh' }}>
+                        <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
                             {!showDoc && Array.isArray(intResponseData) && intResponseData.length > 0 && (
                                 <Box>
                                     <h3>Enhance your query based on below parameters</h3>
@@ -129,7 +148,7 @@ function Discover() {
                                     key={doc.Document_Name}
                                     doc={doc}
                                     onSelect={handleSelect}
-                                    isSelected={selectedDocs.includes(doc)}
+                                    isSelected={selectedDocs.some(item => item.title === doc.title)}
                                 />
                             ))}
                             {/* <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: 4 }}>
@@ -140,12 +159,28 @@ function Discover() {
                         </Box>
                     </Paper>
                 </Box>
+                {selectedDocs.length > 0 && (
+                    <Fab
+                        color="primary"
+                        onClick={handleNavigate}
+                        sx={{
+                            position: 'fixed',
+                            bottom: 100,  // Distance from bottom
+                            right: 20,    // Distance from left side
+                            zIndex: 1000,  // Ensure the button is above other content
+                            animation: selectedDocs.length > 0 ? `${dropAnimation} 0.5s ease-out` : 'none',
+                        }}
+                    >
+                        <ExtractIcon titleAccess="Extract" />
+                    </Fab>)}
+
             </Box>
 
             {/* Second Section (30%) */}
             <Box sx={{ flex: 2, marginTop: 2 }}>
                 <Chatbot onChatSubmit={handleChatSubmit} />
             </Box>
+
         </Box>
     );
 }

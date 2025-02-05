@@ -1,43 +1,22 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardActions, Checkbox, Box, Typography, Button } from '@mui/material';
-
-const documentData = [
-  {
-    "title": "SEL_AR_O&G.pdf",
-    "excerpt": "...to active development of its field operations...",
-    "Document_Name": "SEL_AR_O&G",
-    "Document_Category": "FIN",
-    "source_uri": "https://teailbucket.s3.us-west-2.amazonaws.com/documents/SEL_AR_O%26G.pdf",
-    "Company_Name": "Selan Exploration",
-    "Company_ID": "INE073A01015",
-    "Document_Type": "AR"
-  },
-  {
-    "title": "OIL_SR_O&G.pdf",
-    "excerpt": "...Exploration and Production of Crude oil...",
-    "Document_Name": "OIL_SR_O&G",
-    "Document_Category": "ESG",
-    "source_uri": "https://teailbucket.s3.us-west-2.amazonaws.com/documents/OIL_SR_O%26G.pdf",
-    "Company_Name": "Oil India Limited",
-    "Company_ID": "INE490J01019",
-    "Document_Type": "SR"
-  },
-  // Add other document data here
-];
+import { Card, CardContent, CardActions, Checkbox, Box, Typography, Button, Divider } from '@mui/material';
+import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
 
 const DocumentCard = ({ doc, onSelect, isSelected }) => {
   let colr = !isSelected ? "success" : "error";
   let text = isSelected ? "Selected" : "Select";
   return (
-    <Card sx={{ width: 250, margin: 2, boxShadow: 3 }}>
+    <Card sx={{ width: 250, margin: 2, boxShadow: 3, display: "flex", flexDirection: "column", justifyContent: "space-between", borderLeft: "5px solid skyblue" }}>
       <CardContent>
         <Typography variant="h6">{doc.title}</Typography>
+        <Divider/>
         <Typography variant="body2" color="text.secondary">
           {doc.excerpt}
         </Typography>
       </CardContent>
+      <Divider/>
       <CardActions sx={{ justifyContent: 'center' }}>
-        <Button variant="contained" color= {colr} onClick={() => onSelect(doc)}>
+        <Button variant="contained" color= {colr} onClick={() => onSelect(doc)} size='small' startIcon={<PictureAsPdfOutlinedIcon/>}>
           {text}
         </Button>
       </CardActions>

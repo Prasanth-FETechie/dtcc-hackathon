@@ -50,14 +50,18 @@ const BRANDING = {
 };
 
 function App(props) {
-
+  const theme = createTheme({
+    typography : {
+      fontFamily : "'Montserrat', sans-serif",
+    },
+  })
   const router = useDemoRouter('/');
   console.log(router);
   
 
   return (
     // preview-start
-    <ReactRouterAppProvider navigation={NAVIGATION} branding={BRANDING}>
+    <ReactRouterAppProvider navigation={NAVIGATION} branding={BRANDING} theme={theme}>
       <Outlet />
     </ReactRouterAppProvider>
   );
