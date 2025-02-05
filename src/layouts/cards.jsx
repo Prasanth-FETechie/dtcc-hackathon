@@ -1,92 +1,49 @@
-import React, { useState } from "react";
-import { Card, CardContent, Typography, IconButton, Collapse, Box, Link } from "@mui/material";
-import { motion } from "framer-motion";
-import { TrendingUp, AttachMoney, ExpandMore, ExpandLess, Description } from "@mui/icons-material";
+import React, { useState } from 'react';
+import { Card, CardContent, CardActions, Checkbox, Box, Typography, Button } from '@mui/material';
 
-const FinancialCard = ({ data }) => {
-  const [expanded, setExpanded] = useState(false);
+const documentData = [
+  {
+    "title": "SEL_AR_O&G.pdf",
+    "excerpt": "...to active development of its field operations...",
+    "Document_Name": "SEL_AR_O&G",
+    "Document_Category": "FIN",
+    "source_uri": "https://teailbucket.s3.us-west-2.amazonaws.com/documents/SEL_AR_O%26G.pdf",
+    "Company_Name": "Selan Exploration",
+    "Company_ID": "INE073A01015",
+    "Document_Type": "AR"
+  },
+  {
+    "title": "OIL_SR_O&G.pdf",
+    "excerpt": "...Exploration and Production of Crude oil...",
+    "Document_Name": "OIL_SR_O&G",
+    "Document_Category": "ESG",
+    "source_uri": "https://teailbucket.s3.us-west-2.amazonaws.com/documents/OIL_SR_O%26G.pdf",
+    "Company_Name": "Oil India Limited",
+    "Company_ID": "INE490J01019",
+    "Document_Type": "SR"
+  },
+  // Add other document data here
+];
 
-  const toggleExpand = () => {
-    setExpanded(!expanded);
-  };
-
+const DocumentCard = ({ doc, onSelect, isSelected }) => {
+  let colr = !isSelected ? "success" : "error";
+  let text = isSelected ? "Selected" : "Select";
   return (
-    <motion.div 
-      whileHover= {{ scale: 1.02 }
-}
-whileTap = {{ scale: 0.98 }}
-    >
-  <Card sx={ { maxWidth: 600, m: 2, p: 2, borderRadius: 3, boxShadow: 5 } }>
-    <CardContent>
-    <Typography variant="h6" color = "primary" gutterBottom >
-            📈 Financial Performance - Reliance
-  </Typography>
-
-  < Box display = "flex" alignItems = "center" gap = { 1} >
-    <AttachMoney color="success" />
-      <Typography variant="body1" >
-        <strong>Revenue: </strong> ₹10,00,122 Cr (US$ 119.9B) <span style={{ color: "green" }}>↑ 2.6%</span >
-          </Typography>
-          </Box>
-
-          < Box display = "flex" alignItems = "center" gap = { 1} mt = { 1} >
-            <TrendingUp color="secondary" />
-              <Typography variant="body1" >
-                <strong>EBITDA: </strong> ₹1,78,677 Cr (US$ 21.4B) <span style={{ color: "green" }}>↑ 16.1%</span >
-                  </Typography>
-                  </Box>
-
-                  < Box display = "flex" alignItems = "center" gap = { 1} mt = { 1} >
-                    <TrendingUp color="action" />
-                      <Typography variant="body1" >
-                        <strong>Net Profit: </strong> ₹79,020 Cr <span style={{ color: "green" }}>↑ 7.3%</span >
-                          </Typography>
-                          </Box>
-
-                          < Typography variant = "body2" color = "textSecondary" mt = { 2} >
-                            { data.answer }
-                            </Typography>
-
-{/* Expandable Section */ }
-<IconButton onClick={ toggleExpand } sx = {{ mt: 2 }}>
-  { expanded?<ExpandLess /> : <ExpandMore />}
-</IconButton>
-
-  < Collapse in={ expanded } timeout = "auto" unmountOnExit >
-    <Typography variant="subtitle1" color = "primary" mt = { 2} >
-              📑 Related Documents:
-</Typography>
-
-{
-  data.documents.map((doc, index) => (
-    <Box key= { index } display = "flex" alignItems = "center" mt = { 1} gap = { 1} >
-    <Description color="primary" />
-  <Link href={ doc.metadata._source_uri } target = "_blank" rel = "noopener" >
-  { doc.metadata.Document_Name }
-  </Link>
-  </Box>
-  ))
-}
-</Collapse>
-  </CardContent>
-  </Card>
-  </motion.div>
+    <Card sx={{ width: 250, margin: 2, boxShadow: 3 }}>
+      <CardContent>
+        <Typography variant="h6">{doc.title}</Typography>
+        <Typography variant="body2" color="text.secondary">
+          {doc.excerpt}
+        </Typography>
+      </CardContent>
+      <CardActions sx={{ justifyContent: 'center' }}>
+        <Button variant="contained" color= {colr} onClick={() => onSelect(doc)}>
+          {text}
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 
-// Example usage
-const responseData = {
-  answer: "Reliance delivered robust financial performance with consolidated revenue reaching ₹10,00,122 crore...",
-  documents: [
-    {
-      metadata: {
-        Document_Name: "RIL_AR_O&G.pdf",
-        _source_uri: "https://teailbucket.s3.us-west-2.amazonaws.com/documents/RIL_AR_O%26G.pdf",
-      },
-    },
-  ],
-};
 
-export default function Cards() {
-  return <FinancialCard data={ responseData } />;
-}
+export default DocumentCard;

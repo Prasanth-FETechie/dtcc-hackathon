@@ -3,21 +3,25 @@ import { Box, TextField, Button, Modal, Typography, Paper, CircularProgress, Inp
 import SendIcon from "@mui/icons-material/Send";
 import SmartToyIcon from "@mui/icons-material/SmartToy"; // Bot Icon
 
-const Chatbot = (props) => {
+const Chatbot = ({onChatSubmit, from}) => {
   const [message, setMessage] = useState("");
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [extract, setExtract] = useState(false);
   const [analyze, setAnalyze] = useState(false);
+  console.log(from)
   const handleSend = () => {
+    
     if (message.trim()) {
+      onChatSubmit(message);
       setLoading(true);
-
+      setMessage("");
+      setLoading(false)
       // Simulate delay before showing the modal (e.g., bot processing response)
-      setTimeout(() => {
-        setLoading(false);
-        props.from == 'extract' ? setExtract(true) : props.from == 'analyze' ? setAnalyze(true) : setOpen(true);
-      }, 1500); // 1.5-second delay
+      // setTimeout(() => {
+      //   setLoading(false);
+      //   props.from == 'extract' ? setExtract(true) : props.from == 'analyze' ? setAnalyze(true) : setOpen(true);
+      // }, 1500); // 1.5-second delay
     }
   };
 
