@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import Axios from "axios";
 import { useState, useEffect } from "react";
 
-function MarketTable({ data, title }) {
+function MarketTable({ data, title }) { 
     const [headers, setHeaders] = useState([]);
     const [apiData, setApiData] = useState([]);
     const [order, setOrder] = useState("asc");
@@ -11,25 +11,13 @@ function MarketTable({ data, title }) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await Axios.get(data);
-                if (Array.isArray(response.data.body) && response.data.body.length > 0) {
-                    setHeaders(Object.keys(response.data.body[0]))
-                    setApiData(response.data.body);
-                } else {
-                    console.warn("API returned an empty array or unexpected data format");
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-
-        fetchData();
-        console.log(headers);
-        console.log(apiData);
-    }, []);
-    if (apiData.length === 0) return <p>Loading...</p>;
+        if(data.length != 0){
+        setHeaders(Object.keys(data[0]))
+        setApiData(data);
+        }
+    }, [data]);
+    
+    if (data.length == 0 || apiData.length == 0) return <p>Loading...</p>;
     // Sorting logic
     const handleSort = (property) => {
         const isAsc = orderBy === property && order === "asc";
