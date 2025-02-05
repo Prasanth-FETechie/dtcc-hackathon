@@ -31,7 +31,7 @@ const Chatbot = ({onChatSubmit, from}) => {
     }
 
   return (
-    <Box sx={{ bottom: 20, right: 20, p: 2 }}>
+    <Box sx={{ bottom: 20, right: 20, pl: 1, pr:1 }}>
       {/* Chat Input Box */}
       <Paper sx={{ p: 2, display: "flex", alignItems: "center", gap: 1, borderRadius: 3 }}>
         <TextField
