@@ -46,7 +46,7 @@ const NAVIGATION = [
    }
 ];
 const BRANDING = {
-  title: 'Self-Service Portfolio',
+  title: 'Info-Navigator for Capital Markets',
 };
 
 function App(props) {
