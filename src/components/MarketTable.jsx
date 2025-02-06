@@ -90,7 +90,7 @@ import {
               sx={{ width: 250 }}
             />
           </Box>
-          <TableContainer sx={{ maxHeight: 440 }}>
+          <TableContainer sx={{ maxHeight: 400 }}>
             <Table size="small" stickyHeader>
               {/* Table Head */}
               <TableHead>
