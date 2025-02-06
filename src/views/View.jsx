@@ -10,32 +10,40 @@ function View() {
     const [loading, setLoading] = useState(false);    
     const [chatQuery, setChatQuery] = useState("");
     const [portfolio, setPortfolio] = useState({});
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await Axios.get("https://vszsuwqrx5znei4sssizlp3qra0kvejv.lambda-url.us-west-2.on.aws/");
-                
-                if (Array.isArray(response.data.company)) {
-                    //   setHeaders(Object.keys(response.data.body.companies[0]))
-                    //   setApiData(response.data.body.companies);
-                    setPortfolio(response.data)
-                    setExistingData(response.data.company)
-                } else {
-                    console.warn("API returned an empty array or unexpected data format");
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            } finally {
-                setLoading(false)
-            }
-        };
+    // useEffect(() => {
+        
 
-        fetchData();
-    }, []);
+    //     fetchData();
+    // }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await Axios.get("https://vszsuwqrx5znei4sssizlp3qra0kvejv.lambda-url.us-west-2.on.aws/");
+            
+            if (Array.isArray(response.data.company)) {
+                //   setHeaders(Object.keys(response.data.body.companies[0]))
+                //   setApiData(response.data.body.companies);
+                setPortfolio(response.data)
+                setExistingData(response.data.company)
+            } else {
+                console.warn("API returned an empty array or unexpected data format");
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        } finally {
+            setLoading(false)
+        }
+    };
+
     const handleChatSubmit = async (input) => {
         setChatQuery(input)
         setShowPrediction(true)
         setLoading(true)
+
+        fetchData()
+        // setTimeout(() => {
+        //     setLoading(false)
+        // }, 5000);
     };
     return (
         <>
