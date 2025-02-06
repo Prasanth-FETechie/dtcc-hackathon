@@ -42,15 +42,18 @@ function Discover() {
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true)
             try {
-                const response = await Axios.get("https://47l1w34bw5.execute-api.us-west-2.amazonaws.com/dataTest");
-                if (Array.isArray(response.data.body.companies)) {
-                    setExistingData(response.data.body.companies)
+                const response = await Axios.get("https://vszsuwqrx5znei4sssizlp3qra0kvejv.lambda-url.us-west-2.on.aws/");
+                if (Array.isArray(response.data.company)) {
+                    setExistingData(response.data.company)
                 } else {
                     console.warn("API returned an empty array or unexpected data format");
                 }
             } catch (error) {
                 console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false)
             }
         };
 
@@ -73,7 +76,6 @@ function Discover() {
     }, [selectedDocs, selectedKeywords, preserverDiscover, keywordData, selectedQualifiers]);
     //discover sections
     const handleTabChange = (event, newValue) => {
-        console.log(event)
         setActiveTab();
     };
 
@@ -102,7 +104,7 @@ function Discover() {
         navigate('/extract', { state: { docs: selectedDocs } });
     };
     const handleSelect = (doc) => {
-        console.log(doc)
+        
         // setSelectedDocs((prevState) =>
         //     prevState.includes(doc) ? prevState.filter(item => item !== doc) : [...prevState, doc]
         // );
@@ -114,7 +116,7 @@ function Discover() {
 
             return updatedState;
         });
-        console.log(selectedDocs)
+        
     };
     const fetchIntentData = async (input) => {
         setLoading(true)
@@ -144,13 +146,11 @@ function Discover() {
         setSelectedQualifiers((prev) =>
             prev.includes(option) ? prev.filter((o) => o !== option) : [...prev, option]
         );
-        console.log(selectedQualifiers)
     };
     const handleSubmitSelection = async () => {
         setLoading(true)
         try {
             const disres = await fetchDiscoverData();
-            console.log(disres);
             setKeywordData(disres.keyword);
             setPreserverDiscover(disres.values)
             setDiscoverResponseData(disres.values); // Store the final response for MarketTable
@@ -172,7 +172,6 @@ function Discover() {
         setLoading(true)
         try {
             const intres = await fetchIntentData(input);
-            console.log(intres)
             setIntResponseData(intres)
         } catch (error) {
             console.error("Error fetching market data:", error);

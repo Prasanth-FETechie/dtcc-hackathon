@@ -31,8 +31,6 @@ function View() {
         };
 
         fetchData();
-        // console.log(headers);
-        // console.log(apiData);
     }, []);
     const handleChatSubmit = async (input) => {
         setChatQuery(input)

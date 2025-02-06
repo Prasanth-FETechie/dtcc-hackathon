@@ -30,7 +30,7 @@ function MarketTable({ data, title, id }) {
     if (data.length !== 0) {
       setHeaders(Object.keys(data[0]));
       setApiData(data);
-      console.log(selectedRows);
+      
       sessionStorage.setItem("rows", JSON.stringify(selectedRows));
     }
   }, [data, selectedRows]);

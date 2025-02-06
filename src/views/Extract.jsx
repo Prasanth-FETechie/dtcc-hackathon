@@ -30,16 +30,14 @@ function Extract() {
     const fetchData = async () => {
     setLoading(true);
       try {
-        const response = await Axios.get("https://47l1w34bw5.execute-api.us-west-2.amazonaws.com/dataTest");
-        if (Array.isArray(response.data.body.companies)) {
-          setExistingData(response.data.body.companies);
+        const response = await Axios.get("https://vszsuwqrx5znei4sssizlp3qra0kvejv.lambda-url.us-west-2.on.aws/");
+        if (Array.isArray(response.data.company)) {
+          setExistingData(response.data.company);
         } else {
           console.warn("API returned an empty array or unexpected data format");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
       }
     };
     fetchData();

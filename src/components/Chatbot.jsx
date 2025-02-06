@@ -9,7 +9,7 @@ const Chatbot = ({onChatSubmit, from}) => {
   const [loading, setLoading] = useState(false);
   const [extract, setExtract] = useState(false);
   const [analyze, setAnalyze] = useState(false);
-  console.log(from)
+  
   const handleSend = () => {
     
     if (message.trim()) {

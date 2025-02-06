@@ -1,12 +1,12 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { func } from 'prop-types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { createTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import DescriptionIcon from '@mui/icons-material/Description';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 import LayersIcon from '@mui/icons-material/Layers';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
@@ -17,6 +17,10 @@ import ExtractIcon from '@mui/icons-material/FileCopy';
 import { Routes, Route, BrowserRouter, Link, useNavigation, Outlet } from 'react-router-dom';
 import { ReactRouterAppProvider } from '@toolpad/core/react-router';
 import Routings from './routes';
+import { Badge } from '@mui/material';
+
+
+
 const NAVIGATION = [
 
   {
@@ -31,12 +35,7 @@ const NAVIGATION = [
   },
   {
     segment: 'extract',
-    title: 'Extract',
-    icon: <ExtractIcon />,
-  },
-  {
-    segment: 'analyze',
-    title: 'Analyze',
+    title: 'Extract & Analyze',
     icon: <Analytics />,
   },
   {
@@ -56,7 +55,6 @@ function App(props) {
     },
   })
   const router = useDemoRouter('/');
-  console.log(router);
   
 
   return (
