@@ -121,7 +121,7 @@ function Discover() {
                     {/* Left Section */}
                     <MarketTable data={existingData} title="" id="discover"/>
                     {/* Right Section */}
-                    <Paper sx={{ width: '70vw', overflowY: 'auto', height: '75vh' }}>
+                    {intResponseData.length>0 && ( <Paper sx={{ width: '70vw', overflowY: 'auto', height: '75vh' }}>
                         <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
                             {!showDoc && Array.isArray(intResponseData) && intResponseData.length > 0 && (
                                 <Box>
@@ -157,7 +157,7 @@ function Discover() {
                             </Button>
                         </Box> */}
                         </Box>
-                    </Paper>
+                    </Paper>)}
                 </Box>
                 {selectedDocs.length > 0 && (
                     <Fab
