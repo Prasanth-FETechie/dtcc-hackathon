@@ -13,6 +13,7 @@
     "@toolpad/core": "^0.12.0",
     "axios": "^1.7.9",
     "framer-motion": "^12.0.11",
+    "highcharts-react-official": "^3.2.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.5",

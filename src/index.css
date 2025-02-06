@@ -14,6 +14,6 @@ code {
     monospace;
 }
 
-.css-1093g50-MuiListItem-root {
-  min-height: 5em;
+.css-xs41a9-MuiListItem-root  {
+  min-height: 5em !important;
 }
